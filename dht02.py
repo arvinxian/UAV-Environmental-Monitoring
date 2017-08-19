@@ -1,5 +1,11 @@
 import RPi.GPIO as GPIO
 import time
+#isDataOk = 1
+
+def delay(i): #20*i usdelay  
+    a=0  
+    for j in range(i):  
+        a+1  
 
 def dhtvalue():
 	channel =4 
@@ -12,7 +18,10 @@ def dhtvalue():
 
 	GPIO.setup(channel, GPIO.OUT)
 	GPIO.output(channel, GPIO.LOW)
-	time.sleep(0.02)
+
+        time.sleep(0.02)
+        
+        
 	GPIO.output(channel, GPIO.HIGH)
 	GPIO.setup(channel, GPIO.IN)
 
@@ -21,7 +30,22 @@ def dhtvalue():
 	while GPIO.input(channel) == GPIO.HIGH:
 	  continue
 
-	while j < 40:
+        while j<2:
+          k = 0
+          while GPIO.input(channel) == GPIO.LOW:
+            continue
+          while GPIO.input(channel) == GPIO.HIGH:
+            k += 1
+            if k > 100:
+              break
+          if k < 8:
+            data.append(0)
+          else:
+#            data.append(1)
+            j -= 1
+          j += 1
+
+	while j < 40 and j>1:
 	  k = 0
 	  while GPIO.input(channel) == GPIO.LOW:
 	    continue
@@ -32,12 +56,12 @@ def dhtvalue():
 	  if k < 8:
 	    data.append(0)
 	  else:
-	    data.append(1)
-
+	    data.append(1)          
 	  j += 1
+              
 
 	print "sensor is working."
-	print data
+#	print data
 
 	humidity_bit = data[0:8]
 	humidity_point_bit = data[8:16]
@@ -61,13 +85,31 @@ def dhtvalue():
 	tmp = humidity + humidity_point + temperature + temperature_point
 
 	if check == tmp:
+          print data
 	  print "temperature :", temperature, "*C, humidity :", humidity, "%"
 	else:
-	  print "wrong"
-	  print "temperature :", temperature, "*C, humidity :", humidity, "% check :", check, ", tmp :", tmp
+          global isDataOk
+          isDataOk = 0
+	  print data
+          print "*************************************************************************"
+#	  print "temperature :", temperature, "*C, humidity :", humidity, "% check :", check, ", tmp :", tmp
+          #isDataOk = 0
+#          print isDataOk
 
 	GPIO.cleanup()
 
-for i in range(1,10):
-	dhtvalue()
-        time.sleep(3)
+
+
+isDataOk = 1
+for i in range(1,101):
+#    print isDataOk
+    if isDataOk == 1:
+        dhtvalue()
+        time.sleep(1)
+    else:
+        print "data is not good"
+        isDataOk = 1
+        time.sleep(0.5)
+
+
+
