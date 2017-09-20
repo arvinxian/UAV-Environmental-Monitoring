@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import urllib
 import time
 #isDataOk = 1
 
@@ -87,6 +88,9 @@ def dhtvalue():
 	if check == tmp:
           print data
 	  print "temperature :", temperature, "*C, humidity :", humidity, "%"
+          global mytem,myhum
+          mytem = temperature
+          myhum = humidity
 	else:
           global isDataOk
           isDataOk = 0
@@ -101,15 +105,32 @@ def dhtvalue():
 
 
 isDataOk = 1
-for i in range(1,101):
+mytem = 0
+myhum = 0
+var = 1
+while var == 1:
+#for i in range(1,103):
 #    print isDataOk
     if isDataOk == 1:
         dhtvalue()
-        time.sleep(1)
+        parmas = urllib.urlencode({'my_tem':mytem,'my_hum':myhum})
+        f=urllib.urlopen("http://192.168.2.1:8080/demo/adddata.jsp?",parmas)
+        time.sleep(5)
     else:
         print "data is not good"
         isDataOk = 1
         time.sleep(0.5)
+       # continue
 
 
-
+'''
+	#dhtvalue()
+        if isDataOk == False:
+            print isDataOk
+            print "******************"
+            #isDataOk = True
+            #continue
+        else:
+            dhtvalue()
+            time.sleep(1)
+'''
