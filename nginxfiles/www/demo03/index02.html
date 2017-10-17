@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <!-- 这个meta标签很重要 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KMP播放器演示</title>
+    <!-- KMP播放器 -->
+    <!-- <script src="//cdn.kokoplayer.com/kmp.js" crossorigin="anonymous"></script> -->
+    <script src="kmp.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div style="width: 640px;height: 360px;">
+        <!-- video对象 -->
+        <video id="myVideo"></video>
+    </div>
+
+    <script>
+        if(window.KMP) {
+            var kmp = new KMP();
+                //初始化
+                kmp.setup(document.getElementById("myVideo"), {
+                    enableUI : true,//是否使用KMP内置的UI
+                    theme    : "red",//内置皮肤名称
+                    autoplay : true,//自动播放
+                    mime     : KMP.MIME.M3U8,//视频mime类型
+                    src      : "../hls/room.m3u8",//视频地址
+                    //webvtt字幕
+                    subtitle : [{
+                        "lang": "中文",
+                        "src" : "http://example.com/video/example.vtt"
+                    }]
+            });
+           //初始化后，通过kmp.media对象调用接口
+        } else {
+            //KMP.js未加载，或者加载失败
+        }
+    </script>
+</body>
+</html>
