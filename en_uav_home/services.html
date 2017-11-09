@@ -9,13 +9,21 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-        
-        
+        <script type="text/javascript" src="js/move-top.js"></script>
+        <script type="text/javascript" src="js/easing.js"></script>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/font-awesome.css">
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/templatemo-misc.css">
         <link rel="stylesheet" href="css/templatemo-style.css">
+        <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+        <script src="js/jquery.min.js"></script>
         <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
     </head>
     <body>
@@ -165,6 +173,392 @@
                     </div> <!-- /.service-item -->
                 </div> <!-- /.row -->
             </div> <!-- /.inner-content -->
+        </div> <!-- /.content-wrapper -->
+
+
+        <div class="content-wrapper">
+
+              <!-- //pricing -->
+
+              <div id="pricing1" class="pricing1">
+              <div class="container">
+              	<h3>环境数据</h3>
+              	<p class="para">数据可视化查询,(无选择每10s刷新一次)
+              		<span>地点和设备号进行数据查询(最近的数据).</span></p>
+              		地点：<select id="taddress">
+              			<option value="华西" selected = "selected">华西</option>
+              			<option value="望江">望江</option>
+              			<option value="江安">江安</option>
+              			<option value="其他">其他</option>
+              		</select>
+              		设备号：<select id="tdeviceid">
+              			<option value="0" selected = "selected">0</option>
+              			<option value="1">1</option>
+              			<option value="2">2</option>
+              			<option value="3">3</option>
+              		</select>
+              	<div id="main1" style="height:400px"></div>
+              	<!-- ECharts单文件引入 -->
+              	<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+              	<script type="text/javascript">
+              			// 路径配置
+              			require.config({
+              					paths: {
+              							echarts: 'http://echarts.baidu.com/build/dist'
+              							//echarts: '../src'
+              					}
+              			});
+                    var myChart1;
+              			// 使用
+              			require(
+              					[
+              							'echarts',
+              							'echarts/chart/line',
+              							'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+              					],
+
+              					function (ec) {
+              							// 基于准备好的dom，初始化echarts图表
+              							myChart1 = ec.init(document.getElementById('main1'));
+
+              							option = {
+              												title : {
+              														text: '气温、湿度变化',
+              														subtext: '无人机真实测量'
+              												},
+              												tooltip : {
+              														trigger: 'axis'
+              												},
+              												legend: {
+              														data:['温度','湿度']
+              												},
+              												toolbox: {
+              														show : true,
+              														feature : {
+              																mark : {show: true},
+              																dataView : {show: true, readOnly: false},
+              																magicType : {show: true, type: ['line', 'bar']},
+              																restore : {show: true},
+              																saveAsImage : {show: true}
+              														}
+              												},
+              												calculable : true,
+              												xAxis : [
+              														{
+              																type : 'category',
+              																axisLabel:{
+                                                     interval: 0
+              																		 },
+              																boundaryGap : false,
+              																data:["2011","2012","2013"],
+
+              														}
+              												],
+              												yAxis : [
+              														{
+              																type : 'value',
+              																name : '温度',
+              																/*max:120,
+              																min:-40,*/
+              																axisLabel : {
+              																		formatter: '{value} °C'
+              																}
+              														}
+              														,
+              														{
+              																type:'value',
+              																name:'湿度',
+              																scale:true,
+              																axisLabel : {
+              																		formatter: '{value} %'
+              																}
+              														}
+              												],
+              												series : [
+              														{
+              																name:'温度(°C)',
+              																type:'line',
+              																symbol:'emptycircle',
+              																data:[10,10,10,10,10,10,10]
+              														},
+              														{
+              																name:'湿度(%)',
+              																type:'line',
+              																symbol:'emptyrect',
+              																yAxisIndex: 1,        //与第二y轴有关
+              																data:[2,6,2,4,5,4,6]
+              														}
+              												]
+              											};
+
+                     //myChart1.showLoading();    //数据加载完之前先显示一段简单的loading动画
+                     console.info(myChart1);
+              			 myChart1.setOption(option,true);
+              			 //myChart1.resize();
+              			 loadOption("华西",0);
+              							setInterval(refresh, 10000);
+                            myChart1.setOption(option,true);
+              							// 为echarts对象加载数据
+              							//myChart1.setOption(option);
+
+              					}
+              			);
+
+              		 var list;
+              		 function loadOption(address,deviceid){
+
+              //alert(0);
+              			var tems=[];        //温度数组（存放服务器返回的所有温度值）
+              			var hums=[];        //湿度数组
+              			var dates=[];  //时间数组
+
+              			$.ajax({    //使用JQuery内置的Ajax方法
+              			type : "get",       //post请求方式
+              			async : true,        //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+              			url : "yindex2.jsp",    //请求发送到ShowInfoIndexServlet处
+              			data : {name:"test",address:address,deviceid:deviceid},        //请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+              			dataType : "json",        //返回数据形式为json
+              			success : function(result) {
+              					//请求成功时执行该函数内容，result即为服务器返回的json对象
+              					//var json=eval("("+result+")");
+              			list=result.record_list;
+
+              					//alert(list);
+              					if (list!= null && list.length > 0) {
+              								 for(var i=0;i<list.length;i++){
+              										tems.push(list[i].tem);        //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
+              										hums.push(list[i].hum);
+              										dates.push(list[i].dataStr);
+              										//alert(list[i].dateStr);
+              								 }
+              								 myChart1.hideLoading();    //隐藏加载动画
+                               //myChart1.clear();
+              								 var option = myChart1.getOption();
+                               option.xAxis[0]["data"]=dates;//改变坐标值
+              								 option.series[0]["data"]=tems;//改变坐标值
+              								 option.series[1]["data"]=hums;//改变坐标值
+                               myChart1.setOption(option,true);//设置图表对象的所有参数属性
+              								 /*myChart1.setOption({        //载入数据
+              										 xAxis: [
+              														{
+              																 type : 'category',
+              																 boundaryGap : false,
+              																 data:dates
+              											       }
+              							               ],
+              										 series:[    //填入系列（内容）数据
+              																	 {
+              																 // 根据名字对应到相应的系列
+              																 name: '温度',
+              																 data: tems
+              														 },
+              																	 {
+              																 name: '湿度',
+              																 data: hums
+              														 }
+              										],
+              								 });*/
+              								 //alert(0);
+
+              					}
+              					else {
+              							//返回的数据为空时显示提示信息
+              							alert("2图表请求数据为空，可能服务器暂未录入近七天的观测数据，您可以稍后再试！");
+              								myChart1.hideLoading();
+              					}
+
+              		 },
+              			error : function(errorMsg) {
+              					//请求失败时执行该函数
+              					alert("2图表请求数据失败，可能是服务器开小差了");
+              					myChart1.hideLoading();
+              			}
+               })
+               }
+              //var year;
+              //var month;
+              var address;
+              var deviceid;
+              /*$(document).ready(function(){
+               $('#tyear').change(function(){
+                 year = $('#tyear').val();
+              	 //alert(year);
+              	 month = $('#tmonth').val();
+              	 //alert(month);
+              	 address = $('#taddress').val();
+              	 deviceid = $('#tdeviceid').val();
+               	 //alert(address);
+              	 loadOption(year,month,address,deviceid);
+               })
+              })
+              $(document).ready(function(){
+              $('#tmonth').change(function(){
+              	month = $('#tmonth').val();
+              	//alert(month);
+              	year = $('#tyear').val();
+              	//alert(year);
+              	address = $('#taddress').val();
+              	deviceid = $('#tdeviceid').val();
+              	//alert(address);
+              	loadOption(year,month,address,deviceid);
+               })
+             })*/
+              $(document).ready(function(){
+              $('#taddress').change(function(){
+              	address = $('#taddress').val();
+              	//alert(address);
+              	//month = $('#tmonth').val();
+              	//alert(month);
+              	//year = $('#tyear').val();
+                deviceid = $('#tdeviceid').val();
+              	//alert(year);
+              	//alert(address);
+              	loadOption(address,deviceid);
+               })
+              })
+              $(document).ready(function(){
+              $('#tdeviceid').change(function(){
+              	address = $('#taddress').val();
+              	//alert(address);
+              	//month = $('#tmonth').val();
+              	//alert(month);
+              	//year = $('#tyear').val();
+                deviceid = $('#tdeviceid').val();
+              	//alert(year);
+              	loadOption(address,deviceid);
+               })
+              })
+              	</script>
+              		<div class="clearfix"> </div>
+              </div>
+              </div>
+
+
+        </div> <!-- /.content-wrapper -->
+
+
+        <div class="content-wrapper">
+
+              <!-- //pricing -->
+
+              <div id="pricing1" class="pricing1">
+              <div class="container">
+              	<h3>未来一周天气预测</h3>
+              	<div id="main2" style="height:400px"></div>
+              	<!-- ECharts单文件引入 -->
+              	<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+              	<script type="text/javascript">
+              			// 路径配置
+              			require.config({
+              					paths: {
+              							echarts: 'http://echarts.baidu.com/build/dist'
+              							//echarts: '../src'
+              					}
+              			});
+                    var myChart2;
+              			// 使用
+              			require(
+              					[
+              							'echarts',
+              							'echarts/chart/line'
+              							//'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+              					],
+
+              					function (ec) {
+              							// 基于准备好的dom，初始化echarts图表
+              							myChart2 = ec.init(document.getElementById('main2'));
+
+                            option = {
+                                        title : {
+                                            text: '未来一周气温变化',
+                                            subtext: '纯属虚构'
+                                        },
+                                        tooltip : {
+                                            trigger: 'axis'
+                                        },
+                                        legend: {
+                                            data:['最高气温','最低气温']
+                                        },
+                                        toolbox: {
+                                            show : true,
+                                            feature : {
+                                                mark : {show: true},
+                                                dataView : {show: true, readOnly: false},
+                                                magicType : {show: true, type: ['line', 'bar']},
+                                                restore : {show: true},
+                                                saveAsImage : {show: true}
+                                            }
+                                        },
+                                        calculable : true,
+                                        xAxis : [
+                                            {
+                                                type : 'category',
+                                                boundaryGap : false,
+                                                data : ['周一','周二','周三','周四','周五','周六','周日']
+                                            }
+                                        ],
+                                        yAxis : [
+                                            {
+                                                type : 'value',
+                                                axisLabel : {
+                                                    formatter: '{value} °C'
+                                                }
+                                            }
+                                        ],
+                                        series : [
+                                            {
+                                                name:'最高气温',
+                                                type:'line',
+                                                data:[11, 11, 15, 13, 12, 13, 10],
+                                                markPoint : {
+                                                    data : [
+                                                        {type : 'max', name: '最大值'},
+                                                        {type : 'min', name: '最小值'}
+                                                    ]
+                                                },
+                                                markLine : {
+                                                    data : [
+                                                        {type : 'average', name: '平均值'}
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                name:'最低气温',
+                                                type:'line',
+                                                data:[1, -2, 2, 5, 3, 2, 0],
+                                                markPoint : {
+                                                    data : [
+                                                        {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                                                    ]
+                                                },
+                                                markLine : {
+                                                    data : [
+                                                        {type : 'average', name : '平均值'}
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    };
+
+
+                     //myChart2.showLoading();    //数据加载完之前先显示一段简单的loading动画
+                     console.info(myChart2);
+              			 myChart2.setOption(option,true);
+              			 //myChart1.resize();
+              			 //loadOption("华西",0);
+              			 //setInterval(refresh, 10000);
+                            //myChart2.setOption(option,true);
+              							// 为echarts对象加载数据
+              							//myChart1.setOption(option);
+
+              					}
+              			);
+              	</script>
+              		<div class="clearfix"> </div>
+              </div>
+              </div>
+
+
         </div> <!-- /.content-wrapper -->
 
         <script src="js/vendor/jquery-1.11.0.min.js"></script>
