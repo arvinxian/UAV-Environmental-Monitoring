@@ -87,17 +87,18 @@
 	<div class="container">
 		
 		<div id="allmap" style="height:600px"></div>
-    <!-- ECharts单文件引入 -->
+    
      <script src="../script/jquery-1.8.3.min.js" ></script>
   <script src="../script/map_view.js"></script>
-  
- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=B7d71c582e960e8bc1eae517183b5f77"></script>		
+
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=B7d71c582e960e8bc1eae517183b5f77"></script>
+
 	</div>
 	</div>
         
         
       
-        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=B7d71c582e960e8bc1eae517183b5f77"></script>
+      
         <script src="../js/vendor/jquery-1.11.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="../js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
         <script src="../js/plugins.js"></script>

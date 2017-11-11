@@ -122,9 +122,10 @@ alert(2);
     	
    	  var track_id=document.getElementById("device_id").value;
    	
-   	var timeFrom="2015-09-19"
-   		var timeTo="2015-09-21";
-   		window.location="show_track.jsp?trackid=" + track_id+"&gps_time_from="+timeFrom+"&gps_time_to="+timeTo;
+   	//var timeFrom="2015-09-19"
+   		//var timeTo="2015-09-21";
+   		window.location="show_track.jsp?trackid=" + track_id;
+		//+"&gps_time_from="+timeFrom+"&gps_time_to="+timeTo;
    		//+"&gps_time_from="+timeFrom+"&gps_time_to="+timeTo
 
      };
@@ -160,5 +161,4 @@ alert(2);
                                     
                       };
 
-}();      
-
+}(); 

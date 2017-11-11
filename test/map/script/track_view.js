@@ -87,10 +87,10 @@ var size = new BMap.Size(90, 50);
 	};
 
 	var addLine = function() { // 添加线路
-		// var gpsTimeFrom=document.getElementById("gps_time_from").value;
-		// var gpsTimeTo=document.getElementById("gps_time_to").value;
-		var timeFrom = "2016-12-01";
-		var timeTo = "2017-12-21";
+		var timeFrom=document.getElementById("gps_time_from").value;
+		var timeTo=document.getElementById("gps_time_to").value;
+		//var timeFrom = "2017-10-01 00:00:00";
+		//var timeTo = "2017-12-31 24:00:00";
 		//+"device_id="+trackId&gps_time_from=2016-12-01 &gps_time_to=2017-12-21 "
 	
 		$.post("gps_track.jsp?device_id="+trackId+"&gps_time_from="+timeFrom+"&gps_time_to="+timeTo,function(data){

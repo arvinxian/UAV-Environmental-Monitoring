@@ -13,12 +13,12 @@
 		classnotfoundexception.printStackTrace();
 	}
 	try {
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?user=ylx&password=ylx&useUnicode=true&characterEncoding=UTF-8");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/enuav?user=root&password=admin&useUnicode=true&characterEncoding=UTF-8");
 		Statement statement = conn.createStatement();
 		System.out.println("连接数据库Ok！！！");
 		//构造sql语句，根据传递过来的查询条件参数，目前是deviceId和gpsTime
 
-		String sql="select max(time),device_id,tem,hum,pm25,longitude,latitude from data_list where time>'2016-01-01' group by device_id order by device_id";
+		String sql="select max(time),device_id,tem,hum,pm25,longitude,latitude from data_list where time>'2016-01-01 00:00:00' group by device_id order by device_id";
 		System.out.println("构造出来的sql语句是："+sql);
 		ResultSet rs = statement.executeQuery(sql);
 		while (rs.next()) {

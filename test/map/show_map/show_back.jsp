@@ -12,7 +12,7 @@
     </style>
    <script src="../script/jquery-1.8.3.min.js" ></script>
 <script src="../script/track_back.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=B7d71c582e960e8bc1eae517183b5f77"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=0.0&ak=B7d71c582e960e8bc1eae517183b5f77"></script>
 
 
 </head>
@@ -20,8 +20,8 @@
 <body  >
 
 <div id="controller" align="center">
-    时间：<input type="text" style="color:#429812;" id="gps_time_from" value="2016-12-01"/>到
-    <input type="text" style="color:#429812;" id="gps_time_to" value="2017-12-21"/>
+    时间：<input type="text" style="color:#429812;" id="gps_time_from" value="2017-10-01 00:00:00"/>到
+    <input type="text" style="color:#429812;" id="gps_time_to" value="2017-12-31 24:00:00"/>
     超速限制
     <input type="text" style="color:#429812;" id="chaosuxianzhi" value="60"/>
     <!-- <input type="text" class="" id="device_id" value="381215032027883"/>-->

@@ -17,7 +17,7 @@
 		classnotfoundexception.printStackTrace();
 	}
 	try {
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?user=ylx&password=ylx&useUnicode=true&characterEncoding=UTF-8");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/enuav?user=root&password=admin&useUnicode=true&characterEncoding=UTF-8");
 		Statement statement = conn.createStatement();
 		System.out.println("连接数据库Ok！！！");
 		//构造sql语句，根据传递过来的查询条件参数，目前是deviceId和gpsTime
