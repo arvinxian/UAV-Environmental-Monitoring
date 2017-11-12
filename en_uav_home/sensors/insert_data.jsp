@@ -10,6 +10,9 @@
 		String uavpm=request.getParameter("uav_pm");//获取到json字符串
 		String uavlon=request.getParameter("uav_lon");
 		String uavlat=request.getParameter("uav_lat");
+		String uavtem=request.getParameter("uav_tem");
+		String uavhum=request.getParameter("uav_hum");
+
 		// System.out.println(uavpm,uavlon,uavlat);
 		String deviceid="1";
 		//将json数据解析出来
@@ -34,7 +37,7 @@
 			Statement statement = conn.createStatement();
 			System.out.println("连接数据库Ok！！！");
 		
-			String sql = "insert into data_list(pm25,longitude,latitude,device_id,time) values('"+ uavpm + "','" + uavlon + "','" + uavlat + "','" + deviceid +"','" + nowStr +"')";
+			String sql = "insert into data_list(pm25,longitude,latitude,device_id,time,tem,hum) values('"+ uavpm + "','" + uavlon + "','" + uavlat + "','" + deviceid + "','" + nowStr + "','" + uavtem + "','" + uavhum +"')";
 			statement.executeUpdate(sql);
 			System.out.println("最后构造得到的sql语句是："+sql);
 			//System.out.println("最后构造得到的json数组是："+jsonList);
