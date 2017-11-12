@@ -1,4 +1,4 @@
-﻿<%@page contentType="text/html; charset=UTF-8" language="java"
+<%@page contentType="text/html; charset=UTF-8" language="java"
 	import="java.text.*,org.json.JSONObject,java.util.ArrayList,java.io.PrintWriter"
 	import="java.util.HashMap,java.util.List,java.sql.*,java.util.Map,java.io.IOException,java.util.Date,java.util.Calendar"%>
 <%
@@ -13,10 +13,10 @@ response.setContentType("text/xml;charset=utf-8");
 		//String day=request.getParameter("day");
 		//String address=request.getParameter("address");
 
-		String deviceid=request.getParameter("deviceid");
+		//String deviceid=request.getParameter("deviceid");
 
 
-		System.out.println("设备号"+deviceid);
+		//System.out.println("设备号"+deviceid);
 
 		//获取当天在内的五天以前的0点格式字符串（用于数据库查询
         Calendar  cal = Calendar.getInstance();
@@ -44,14 +44,14 @@ response.setContentType("text/xml;charset=utf-8");
 			//构造sql语句，查找是否有相同用户名
 			//String sql="select * from data_list where time like %'"+year+"'%";
 			//String sql="select * from data_list where device_id="+deviceid+"&&location like'%"+address+"%'";
-			String sql="select * from data_list where device_id="+deviceid+" order by id desc limit 0,10";
+			String sql="select * from data_list order by id desc limit 0,10";
 			System.out.println("构造出来的sql语句是："+sql);
 			ResultSet rs = statement.executeQuery(sql);
 			System.out.println("123");
 			while (rs.next()) {
 				Map map = new HashMap();
-				map.put("tem",rs.getFloat("tem"));
-				map.put("hum",rs.getFloat("hum"));
+				map.put("pm25",rs.getFloat("pm25"));
+				//map.put("hum",rs.getFloat("hum"));
 				//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 //String dataStr = sdf.format(rs.getDate("realtime"));
                 //map.put("dateStr", dataStr);

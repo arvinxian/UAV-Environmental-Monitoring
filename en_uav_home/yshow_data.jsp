@@ -33,8 +33,8 @@
             <header class="site-header container-fluid">
                 <div class="top-header">
                     <div class="logo col-md-6 col-sm-6">
-                        <h1><a href="index.html"><em>Art</em>Core</a></h1>
-                        <span>Responsive HTML5 Template</span>
+                      <h1><a href="index.html"><em>无人机</em>环境监测</a></h1>
+                      <span>by PYX小组</span>
                     </div> <!-- /.logo -->
                 </div> <!-- /.top-header -->
                 <div class="main-header">

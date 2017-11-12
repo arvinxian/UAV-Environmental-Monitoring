@@ -54,7 +54,7 @@ response.setContentType("text/xml;charset=utf-8");
 				//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 //String dataStr = sdf.format(rs.getDate("realtime"));
                 //map.put("dateStr", dataStr);
-			  map.put("dataStr",rs.getString("time"));
+			  map.put("dataStr",rs.getDate("time"));
 				jsonList.add(map);
 			}
 			System.out.println("最后构造得到的json数组是："+jsonList);
