@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>无人机环境监测</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/templatemo-misc.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
+        <!--change by ahthor><![endif]-->
+        <link href="css/style.css" rel='stylesheet' type='text/css' />
+        <!--change by ahthor><![endif]-->
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="#/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+
+        <section id="pageloader">
+            <div class="loader-item fa fa-spin colored-border"></div>
+        </section> <!-- /#pageloader -->
+
+
+        <header class="site-header container-fluid">
+            <div class="top-header">
+                <div class="logo col-md-6 col-sm-6">
+                    <h1><a href="index.html"><em>无人机</em>环境监测</a></h1>
+                    <span>by PYX小组</span>
+                </div> <!-- /.logo -->
+            </div> <!-- /.top-header -->
+            <div class="main-header">
+                <div class="row">
+                    <div class="main-header-left col-md-3 col-sm-6 col-xs-8">
+                        <a id="search-icon" class="btn-left fa fa-search" href="#search-overlay"></a>
+                        <div id="search-overlay">
+                            <a href="#search-overlay" class="close-search"><i class="fa fa-times-circle"></i></a>
+                            <div class="search-form-holder">
+                                <h2>Type keywords and hit enter</h2>
+                                <form id="search-form" action="#">
+                                    <input type="search" name="s" placeholder="" autocomplete="off" />
+                                </form>
+                            </div>
+                        </div><!-- #search-overlay -->
+
+                    </div> <!-- /.main-header-left -->
+                    <div class="menu-wrapper col-md-9 col-sm-6 col-xs-4">
+                        <a href="#" class="toggle-menu visible-sm visible-xs"><i class="fa fa-bars"></i></a>
+                        <ul class="sf-menu hidden-xs hidden-sm">
+                            <li class="active"><a href="index.html">首页</a></li>
+
+                        </ul>
+                    </div> <!-- /.menu-wrapper -->
+                </div> <!-- /.row -->
+            </div> <!-- /.main-header -->
+            <div id="responsive-menu">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+
+                </ul>
+            </div>
+        </header> <!-- /.site-header -->
+
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Preloader -->
+        <script type="text/javascript">
+            //<![CDATA[
+            $(window).load(function() { // makes sure the whole site is loaded
+                $('.loader-item').fadeOut(); // will first fade out the loading animation
+                    $('#pageloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+                $('body').delay(350).css({'overflow-y':'visible'});
+            })
+            //]]>
+        </script>
+
+  <!--change by ahthor><![endif]-->
+<div class="main">
+<div class="header" >
+  <h1>管理员登录注册</h1>
+</div>
+  <p>请根据实际情况进行登录或注册</p>
+
+     <ul class="left-form">
+       <h2>New Account:</h2>
+       <li>
+         <input type="text"   placeholder="Username" id="rusername" />
+         <a href="#" class="icon ticker"> </a>
+         <div class="clear"> </div>
+       </li>
+       <li>
+         <input type="text"   placeholder="Email" id="email" />
+         <a href="#" class="icon ticker"> </a>
+         <div class="clear"> </div>
+       </li>
+       <li>
+         <input type="password"   placeholder="password" id="password_0" />
+         <a href="#" class="icon into"> </a>
+         <div class="clear"> </div>
+       </li>
+       <li>
+         <input type="password"   placeholder="password" id="password_1" />
+         <a href="#" class="icon into"> </a>
+         <div class="clear"> </div>
+       </li>
+       <label class="checkbox"><input type="checkbox" name="checkbox" id="checkbox" checked=""><i> </i>同意本网站制定的相关协议</label>
+       <input type="submit" onClick="register_test()" value="Create Account">
+         <div class="clear"> </div>
+     </ul>
+     <ul class="right-form">
+       <h3>Login:</h3>
+       <div>
+         <li><input type="text"  placeholder="Username" id="lusername" /></li>
+         <li> <input type="password"  placeholder="Password" id="lpassword" /></li>
+         <h4>I forgot my Password!</h4>
+           <input type="submit" onClick="login_test()" value="Login" >
+       </div>
+       <div class="clear"> </div>
+     </ul>
+     <div class="clear"> </div>
+
+
+</div>
+   <!--change by ahthor><![endif]-->
+
+    </body>
+</html>
+
+<SCRIPT type="text/javascript">
+function login_test()
+{
+  //alert(0);
+  var username=document.getElementById("lusername").value;
+  var ps=document.getElementById("lpassword").value;
+  if(username.length==0)
+  {Alert("请输入用户名");
+   return;}
+  if(ps.length==0)
+  {Alert("请输入密码");
+   return;}
+  var url="yserver_login.jsp?user_name="+username+"&password="+ps;
+  //alert(url);
+  $.post(url,function(data){
+  //alert(data);
+  var json=eval("("+data+")");
+  if(json.result_code==0)
+  {
+    if(ps==json.real_password)
+    {
+      Alert("登录成功");
+      window.location.href="ymanager_stuff.html";
+    }
+    else {
+        Alert("密码错误");
+    }
+  }
+  else if(json.result_code==-1)
+  {
+  Alert("该用户不存在，尚未注册");
+  }
+
+  });
+}
+
+function register_test()
+{
+//alert(0);
+var username=document.getElementById("rusername").value;
+var email=document.getElementById("email").value;
+var ps0=document.getElementById("password_0").value;
+var ps1=document.getElementById("password_1").value;
+if(!checkUsername(username))
+{return;}
+if(!checkEmail(email))
+{return;}
+if(!checkPassword(ps0,ps1))
+{return;}
+if(!checkbox())
+{return;}
+//alert(1);
+var url="yserver_register.jsp?user_name="+username+"&email="+email+"&password_1="+ps1;
+//alert(url);
+$.post(url,function(data){
+		var json=eval("("+data+")");
+		//alert(0);
+		if(json.result_code==0)
+		{
+		Alert("注册成功,请完成登录");
+		window.location.href="ylogin_register.html";
+		}
+		else{
+		Alert("该用户名已经被注册,请更改用户名");
+		}
+});
+}
+function checkUsername(str)
+{
+  if(str.length==0)
+  {
+    Alert("未输入用户名");
+    return false;
+  }
+  return true;
+}
+function checkEmail(str){
+    //验证邮箱
+	if(str.length==0)
+	{
+	Alert("未输入邮箱，请再次确认!");
+	return false;
+	}
+    var re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+    if(re.test(str)){
+        //alert("正确");
+		return true;
+    }else{
+        Alert("邮箱格式错误，请检查后再次输入!");
+		return false;
+    }
+}
+function checkPassword(str0,str1)
+{
+    if(str0.length==0||str1.length==0)
+	{
+	Alert("请确认两次都输入了密码!");
+	return false;
+	}
+	if(str0!=str1)
+	{
+	Alert("两次输入的密码不一致!");
+	return false;
+	}
+	if(str0.length<6)
+	{
+	Alert("密码长度不能小于6位");
+	return false;
+	}
+	//alert("success");
+	return true;
+}
+function checkbox(){
+  var checkbox = document.getElementById("checkbox");//
+  //alert(checkbox.checked);//是否被选中
+  if(checkbox.checked){
+    return true;
+  }else{
+     alert("请选中同意本网站相关协议");
+     return false;
+  }
+}
+
+//自动关闭提示框
+function Alert(str) {
+    var msgw,msgh,bordercolor;
+    msgw=350;//提示窗口的宽度
+    msgh=80;//提示窗口的高度
+    titleheight=25 //提示窗口标题高度
+    bordercolor="#336699";//提示窗口的边框颜色
+    titlecolor="#99CCFF";//提示窗口的标题颜色
+    var sWidth,sHeight;
+    //获取当前窗口尺寸
+    sWidth = document.body.offsetWidth;
+    sHeight = document.body.offsetHeight;
+//    //背景div
+    var bgObj=document.createElement("div");
+    bgObj.setAttribute('id','alertbgDiv');
+    bgObj.style.position="absolute";
+    bgObj.style.top="0";
+    bgObj.style.background="#E8E8E8";
+    bgObj.style.filter="progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75";
+    bgObj.style.opacity="0.6";
+    bgObj.style.left="0";
+    bgObj.style.width = sWidth + "px";
+    bgObj.style.height = sHeight + "px";
+    bgObj.style.zIndex = "10000";
+    document.body.appendChild(bgObj);
+    //创建提示窗口的div
+    var msgObj = document.createElement("div")
+    msgObj.setAttribute("id","alertmsgDiv");
+    msgObj.setAttribute("align","center");
+    msgObj.style.background="white";
+    msgObj.style.border="1px solid " + bordercolor;
+    msgObj.style.position = "absolute";
+    msgObj.style.left = "50%";
+    msgObj.style.font="12px/1.6em Verdana, Geneva, Arial, Helvetica, sans-serif";
+    //窗口距离左侧和顶端的距离
+    msgObj.style.marginLeft = "-225px";
+    //窗口被卷去的高+（屏幕可用工作区高/2）-150
+    msgObj.style.top = document.body.scrollTop+(window.screen.availHeight/2)-150 +"px";
+    msgObj.style.width = msgw + "px";
+    msgObj.style.height = msgh + "px";
+    msgObj.style.textAlign = "center";
+    msgObj.style.lineHeight ="25px";
+    msgObj.style.zIndex = "10001";
+    document.body.appendChild(msgObj);
+    //提示信息标题
+    var title=document.createElement("h4");
+    title.setAttribute("id","alertmsgTitle");
+    title.setAttribute("align","left");
+    title.style.margin="0";
+    title.style.padding="3px";
+    title.style.background = bordercolor;
+    title.style.filter="progid:DXImageTransform.Microsoft.Alpha(startX=20, startY=20, finishX=100, finishY=100,style=1,opacity=75,finishOpacity=100);";
+    title.style.opacity="0.75";
+    title.style.border="1px solid " + bordercolor;
+    title.style.height="18px";
+    title.style.font="12px Verdana, Geneva, Arial, Helvetica, sans-serif";
+    title.style.color="white";
+    title.innerHTML="提示信息";
+    document.getElementById("alertmsgDiv").appendChild(title);
+    //提示信息
+    var txt = document.createElement("p");
+    txt.setAttribute("id","msgTxt");
+    txt.style.margin="16px 0";
+    txt.innerHTML = str;
+    document.getElementById("alertmsgDiv").appendChild(txt);
+    //设置关闭时间
+    window.setTimeout("closewin()",1500);
+}
+function closewin() {
+    document.body.removeChild(document.getElementById("alertbgDiv"));
+    document.getElementById("alertmsgDiv").removeChild(document.getElementById("alertmsgTitle"));
+    document.body.removeChild(document.getElementById("alertmsgDiv"));
+}
+</script>
