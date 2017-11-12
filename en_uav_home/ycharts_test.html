@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Artcore - Projects 3 Columns</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+
+
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/templatemo-misc.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
+        <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+        <script src="js/jquery.min.js"></script>
+        <!-- //js -->
+        <!-- for-mobile-apps -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="" />
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        		function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <!-- //for-mobile-apps -->
+        <!-- start-smoth-scrolling -->
+        <script type="text/javascript" src="js/move-top.js"></script>
+        <script type="text/javascript" src="js/easing.js"></script>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="#/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+        <section id="pageloader">
+            <div class="loader-item fa fa-spin colored-border"></div>
+        </section> <!-- /#pageloader -->
+
+        <header class="site-header container-fluid">
+            <div class="top-header">
+                <div class="logo col-md-6 col-sm-6">
+                  <h1><a href="index.html"><em>无人机</em>环境监测</a></h1>
+                  <span>by PYX小组</span>
+                </div> <!-- /.logo -->
+            </div> <!-- /.top-header -->
+            <div class="main-header">
+                <div class="row">
+                    <div class="main-header-left col-md-3 col-sm-6 col-xs-8">
+                        <a id="search-icon" class="btn-left fa fa-search" href="#search-overlay"></a>
+                        <div id="search-overlay">
+                            <a href="#search-overlay" class="close-search"><i class="fa fa-times-circle"></i></a>
+                            <div class="search-form-holder">
+                                <h2>Type keywords and hit enter</h2>
+                                <form id="search-form" action="#">
+                                    <input type="search" name="s" placeholder="" autocomplete="off" />
+                                </form>
+                            </div>
+                        </div><!-- #search-overlay -->
+                    </div> <!-- /.main-header-left -->
+                    <div class="menu-wrapper col-md-9 col-sm-6 col-xs-4">
+                        <a href="#" class="toggle-menu visible-sm visible-xs"><i class="fa fa-bars"></i></a>
+                        <ul class="sf-menu hidden-xs hidden-sm">
+                          <li><a href="index.html">返回主页</a></li>
+                          <li><a href="ymanager_stuff.html">返回上一页</a></li>
+                        </ul>
+                    </div> <!-- /.menu-wrapper -->
+                </div> <!-- /.row -->
+            </div> <!-- /.main-header -->
+            <div id="responsive-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </header> <!-- /.site-header -->
+
+        <div class="content-wrapper">
+
+              <!-- //pricing -->
+
+              <div id="pricing1" class="pricing1">
+              <div class="container">
+              	<h3>环境数据</h3>
+              	<p class="para">数据可视化查询,(无选择每10s刷新一次)
+              		<span>设备号进行数据查询(最近的数据).</span></p>
+              		设备号：<select id="tdeviceid">
+              			<option value="1" selected = "selected">0</option>
+              			<option value="2">1</option>
+              			<option value="3">2</option>
+              			<option value="4">3</option>
+              		</select>
+              	<div id="main1" style="height:400px"></div>
+              	<!-- ECharts单文件引入 -->
+              	<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+              	<script type="text/javascript">
+              			// 路径配置
+              			require.config({
+              					paths: {
+              							echarts: 'http://echarts.baidu.com/build/dist'
+              							//echarts: '../src'
+              					}
+              			});
+                    var myChart1;
+              			// 使用
+              			require(
+              					[
+              							'echarts',
+              							'echarts/chart/line',
+              							'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+              					],
+
+              					function (ec) {
+              							// 基于准备好的dom，初始化echarts图表
+              							myChart1 = ec.init(document.getElementById('main1'));
+
+              							option = {
+              												title : {
+              														text: '气温、湿度变化',
+              														subtext: '无人机真实测量'
+              												},
+              												tooltip : {
+              														trigger: 'axis'
+              												},
+              												legend: {
+              														data:['温度','湿度']
+              												},
+              												toolbox: {
+              														show : true,
+              														feature : {
+              																mark : {show: true},
+              																dataView : {show: true, readOnly: false},
+              																magicType : {show: true, type: ['line', 'bar']},
+              																restore : {show: true},
+              																saveAsImage : {show: true}
+              														}
+              												},
+              												calculable : true,
+              												xAxis : [
+              														{
+              																type : 'category',
+              																axisLabel:{
+                                                     interval: 0
+              																		 },
+              																boundaryGap : false,
+              																data:["2011","2012","2013"],
+
+              														}
+              												],
+              												yAxis : [
+              														{
+              																type : 'value',
+              																name : '温度',
+              																/*max:120,
+              																min:-40,*/
+              																axisLabel : {
+              																		formatter: '{value} °C'
+              																}
+              														}
+              														,
+              														{
+              																type:'value',
+              																name:'湿度',
+              																scale:true,
+              																axisLabel : {
+              																		formatter: '{value} %'
+              																}
+              														}
+              												],
+              												series : [
+              														{
+              																name:'温度(°C)',
+              																type:'line',
+              																symbol:'emptycircle',
+              																data:[10,10,10,10,10,10,10]
+              														},
+              														{
+              																name:'湿度(%)',
+              																type:'line',
+              																symbol:'emptyrect',
+              																yAxisIndex: 1,        //与第二y轴有关
+              																data:[2,6,2,4,5,4,6]
+              														}
+              												]
+              											};
+
+                     //myChart1.showLoading();    //数据加载完之前先显示一段简单的loading动画
+                     console.info(myChart1);
+              			 myChart1.setOption(option,true);
+              			 //myChart1.resize();
+              			 loadOption(1);
+              							setInterval(refresh, 10000);
+                            myChart1.setOption(option,true);
+              							// 为echarts对象加载数据
+              							//myChart1.setOption(option);
+
+              					}
+              			);
+
+              		 var list;
+              		 function loadOption(deviceid){
+
+              //alert(0);
+              			var tems=[];        //温度数组（存放服务器返回的所有温度值）
+              			var hums=[];        //湿度数组
+              			var dates=[];  //时间数组
+
+              			$.ajax({    //使用JQuery内置的Ajax方法
+              			type : "get",       //post请求方式
+              			async : true,        //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+              			url : "yindex2.jsp",    //请求发送到ShowInfoIndexServlet处
+              			data : {name:"test",deviceid:deviceid},        //请求内包含一个key为name，value为A0001的参数；服务器接收到客户端请求时通过request.getParameter方法获取该参数值
+              			dataType : "json",        //返回数据形式为json
+              			success : function(result) {
+              					//请求成功时执行该函数内容，result即为服务器返回的json对象
+              					//var json=eval("("+result+")");
+              			list=result.record_list;
+
+              					//alert(list);
+              					if (list!= null && list.length > 0) {
+              								 for(var i=0;i<list.length;i++){
+              										tems.push(list[i].tem);        //挨个取出温度、湿度、压强等值并填入前面声明的温度、湿度、压强等数组
+              										hums.push(list[i].hum);
+              										dates.push(list[i].dataStr);
+              										//alert(list[i].dateStr);
+              								 }
+              								 myChart1.hideLoading();    //隐藏加载动画
+                               //myChart1.clear();
+              								 var option = myChart1.getOption();
+                               option.xAxis[0]["data"]=dates;//改变坐标值
+              								 option.series[0]["data"]=tems;//改变坐标值
+              								 option.series[1]["data"]=hums;//改变坐标值
+                               myChart1.setOption(option,true);//设置图表对象的所有参数属性
+              								 /*myChart1.setOption({        //载入数据
+              										 xAxis: [
+              														{
+              																 type : 'category',
+              																 boundaryGap : false,
+              																 data:dates
+              											       }
+              							               ],
+              										 series:[    //填入系列（内容）数据
+              																	 {
+              																 // 根据名字对应到相应的系列
+              																 name: '温度',
+              																 data: tems
+              														 },
+              																	 {
+              																 name: '湿度',
+              																 data: hums
+              														 }
+              										],
+              								 });*/
+              								 //alert(0);
+
+              					}
+              					else {
+              							//返回的数据为空时显示提示信息
+              							alert("2图表请求数据为空，可能服务器暂未录入近七天的观测数据，您可以稍后再试！");
+              								myChart1.hideLoading();
+              					}
+
+              		 },
+              			error : function(errorMsg) {
+              					//请求失败时执行该函数
+              					alert("2图表请求数据失败，可能是服务器开小差了");
+              					myChart1.hideLoading();
+              			}
+               })
+               }
+              //var year;
+              //var month;
+              //var address;
+              var deviceid;
+              /*$(document).ready(function(){
+               $('#tyear').change(function(){
+                 year = $('#tyear').val();
+              	 //alert(year);
+              	 month = $('#tmonth').val();
+              	 //alert(month);
+              	 address = $('#taddress').val();
+              	 deviceid = $('#tdeviceid').val();
+               	 //alert(address);
+              	 loadOption(year,month,address,deviceid);
+               })
+              })
+              $(document).ready(function(){
+              $('#tmonth').change(function(){
+              	month = $('#tmonth').val();
+              	//alert(month);
+              	year = $('#tyear').val();
+              	//alert(year);
+              	address = $('#taddress').val();
+              	deviceid = $('#tdeviceid').val();
+              	//alert(address);
+              	loadOption(year,month,address,deviceid);
+               })
+             })*/
+              /*$(document).ready(function(){
+              $('#taddress').change(function(){
+              	address = $('#taddress').val();
+              	//alert(address);
+              	//month = $('#tmonth').val();
+              	//alert(month);
+              	//year = $('#tyear').val();
+                deviceid = $('#tdeviceid').val();
+              	//alert(year);
+              	//alert(address);
+              	loadOption(address,deviceid);
+               })
+             })*/
+              $(document).ready(function(){
+              $('#tdeviceid').change(function(){
+              	//address = $('#taddress').val();
+              	//alert(address);
+              	//month = $('#tmonth').val();
+              	//alert(month);
+              	//year = $('#tyear').val();
+                deviceid = $('#tdeviceid').val();
+              	//alert(year);
+              	loadOption(deviceid);
+               })
+              })
+              	</script>
+              		<div class="clearfix"> </div>
+              </div>
+              </div>
+
+
+        </div> <!-- /.content-wrapper -->
+
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Preloader -->
+        <script type="text/javascript">
+            //<![CDATA[
+            $(window).load(function() {
+                $('.loader-item').fadeOut();
+                    $('#pageloader').delay(350).fadeOut('slow');
+                $('body').delay(350).css({'overflow-y':'visible'});
+            })
+            //]]>
+        </script>
+
+    </body>
+</html>
