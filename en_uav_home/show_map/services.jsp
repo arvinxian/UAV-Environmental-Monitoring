@@ -23,7 +23,7 @@
         <header class="site-header container-fluid">
              <div class="top-header">
                 <div class="logo col-md-6 col-sm-6">
-                    <h1><a href="index.jsp"><em>无人机</em>环境监测</a></h1>
+                    <h1><a href="../index.html"><em>无人机</em>环境监测</a></h1>
                     <span>by PYX小组</span>
                 </div> <!-- /.logo -->
             </div> <!-- /.top-header -->
@@ -46,7 +46,7 @@
                     <div class="menu-wrapper col-md-9 col-sm-6 col-xs-4">
                         <a href="#" class="toggle-menu visible-sm visible-xs"><i class="fa fa-bars"></i></a>
                         <ul class="sf-menu hidden-xs hidden-sm">
-                            <li class="active"><a href="index.jsp">首页</a></li>
+                            <li class="active"><a href="../index.html">首页</a></li>
                             <li><a href="services.jsp">无人机地图数据</a>
                                 
                             </li>
@@ -73,7 +73,7 @@
             </div> <!-- /.main-header -->
 			<div id="responsive-menu">
                 <ul>
-                    <li><a href="index.html">首页</a></li>
+                    <li><a href="../index.html">首页</a></li>
                     <li><a href="services.jsp">无人机地图数据</a></li>
                     <li><a href="#">现场视频</a>
                         <ul>

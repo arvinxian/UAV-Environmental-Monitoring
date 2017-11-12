@@ -60,7 +60,7 @@
                         <a href="#" class="toggle-menu visible-sm visible-xs"><i class="fa fa-bars"></i></a>
                         <ul class="sf-menu hidden-xs hidden-sm">
                             <li><a href="index.html">首页</a></li>
-                            <li class="active"><a href="services.html">无人机地图数据</a></li>
+                            <li class="active"><a href="show_map/services.jsp">无人机地图数据</a></li>
                             <li><a href="#">现场视频</a>
                                 <ul>
                                     <li><a href="projects-2.html">Two Columns</a></li>
@@ -83,7 +83,7 @@
             <div id="responsive-menu">
                 <ul>
                     <li><a href="index.html">首页</a></li>
-                    <li><a href="services.html">无人机地图数据</a></li>
+                    <li><a href="show_map/services.jsp">无人机地图数据</a></li>
                     <li><a href="#">现场视频</a>
                         <ul>
                             <li><a href="projects-2.html">Two Columns</a></li>
@@ -115,10 +115,10 @@
               	<p class="para">数据可视化查询,(无选择每10s刷新一次)
               		<span>设备号进行数据查询(最近的数据).</span></p>
               		设备号：<select id="tdeviceid">
-              			<option value="0" selected = "selected">0</option>
-              			<option value="1">1</option>
-              			<option value="2">2</option>
-              			<option value="3">3</option>
+              			<option value="1" selected = "selected">0</option>
+              			<option value="2">1</option>
+              			<option value="3">2</option>
+              			<option value="4">3</option>
               		</select>
               	<div id="main1" style="height:400px"></div>
               	<!-- ECharts单文件引入 -->
@@ -218,7 +218,7 @@
                      console.info(myChart1);
               			 myChart1.setOption(option,true);
               			 //myChart1.resize();
-              			 loadOption(0);
+              			 loadOption(1);
               							setInterval(refresh, 10000);
                             myChart1.setOption(option,true);
               							// 为echarts对象加载数据
