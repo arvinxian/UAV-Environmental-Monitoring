@@ -20,8 +20,8 @@
 <body  >
 
 <div id="controller" align="center">
-    时间：<input type="text" style="color:#429812;" id="gps_time_from" value="2017-10-01 00:00:00"/>到
-    <input type="text" style="color:#429812;" id="gps_time_to" value="2017-12-31 24:00:00"/>
+    时间：<input type="text" style="color:#429812;" id="gps_time_from" value="2017-11-06 00:00:00"/>到
+    <input type="text" style="color:#429812;" id="gps_time_to" value="2017-11-12 24:00:00"/>
     超速限制
     <input type="text" style="color:#429812;" id="chaosuxianzhi" value="60"/>
     <!-- <input type="text" class="" id="device_id" value="381215032027883"/>-->
@@ -34,8 +34,8 @@
 </div>
 <div class="body-nest" id="Footable1" >
 
-超速统计
-    <table class="table-striped footable-res footable metro-blue" data-page-size="6" width="1200" border="1" cellspacing="0">
+无人机信息统计
+    <table class="table-striped footable-res footable metro-blue" data-page-size="4" width="1200" border="1" cellspacing="0">
         <thead>
         <tr>
             <th>
@@ -50,6 +50,9 @@
             </th>
             <th>
                 速度
+            </th>
+            <th>
+                温度
             </th>
 
             <th>
