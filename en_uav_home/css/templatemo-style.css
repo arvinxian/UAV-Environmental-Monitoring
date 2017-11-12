@@ -217,7 +217,7 @@ textarea:focus {
 .main-btn {
   color: white;
   border: 1px solid white;
-  padding: 12px 20px;
+: 12px 20px;
   text-transform: uppercase;
   font-weight: 700;
   display: inline-block;
@@ -284,6 +284,7 @@ a.btn-left:hover, .top-header .social-top ul li a:hover, .main-header .menu-wrap
 
 .top-header {
   width: 100%;
+ 
   overflow: hidden;
   background-color: white;
 }
@@ -306,7 +307,7 @@ a.btn-left:hover, .top-header .social-top ul li a:hover, .main-header .menu-wrap
 @media screen and (max-width: 768px) {
   .top-header .logo {
     text-align: center;
-    padding: 20px;
+    padding: 10px;
   }
   .top-header .logo span {
     display: none;
@@ -350,7 +351,7 @@ a.btn-left:hover, .top-header .social-top ul li a:hover, .main-header .menu-wrap
 
 .main-header {
   width: 100%;
-  min-height: 96px;
+  min-height: 90px;
   background-color: #efefef;
   padding: 30px 60px;
 }
