@@ -91,10 +91,10 @@
               	<p class="para">数据可视化查询,(无选择每10s刷新一次)
               		<span>设备号进行数据查询(最近的数据).</span></p>
               		设备号：<select id="tdeviceid">
-              			<option value="1" selected = "selected">0</option>
-              			<option value="2">1</option>
-              			<option value="3">2</option>
-              			<option value="4">3</option>
+              			<option value="1" selected = "selected">1</option>
+              			<option value="2">2</option>
+              			<option value="3">3</option>
+              			<option value="4">4</option>
               		</select>
               	<div id="main1" style="height:400px"></div>
               	<!-- ECharts单文件引入 -->
@@ -146,7 +146,8 @@
               														{
               																type : 'category',
               																axisLabel:{
-                                                     interval: 0
+                                                interval:0,
+                                                rotate:15
               																		 },
               																boundaryGap : false,
               																data:["2011","2012","2013"],
@@ -195,6 +196,7 @@
               			 myChart1.setOption(option,true);
               			 //myChart1.resize();
               			 loadOption(1);
+                     var refresh = loadOption(1);
               							setInterval(refresh, 10000);
                             myChart1.setOption(option,true);
               							// 为echarts对象加载数据
