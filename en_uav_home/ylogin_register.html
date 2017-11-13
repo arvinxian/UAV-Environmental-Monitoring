@@ -195,8 +195,13 @@ $.post(url,function(data){
 		//alert(0);
 		if(json.result_code==0)
 		{
+		document.getElementById("rusername").value = "";
+      		document.getElementById("email").value = "";
+      		document.getElementById("password_0").value = "";
+      		document.getElementById("password_1").value = "";
+      		document.getElementById("lusername").value = username;
 		Alert("注册成功,请完成登录");
-		window.location.href="ylogin_register.html";
+		//window.location.href="ylogin_register.html";
 		}
 		else{
 		Alert("该用户名已经被注册,请更改用户名");
