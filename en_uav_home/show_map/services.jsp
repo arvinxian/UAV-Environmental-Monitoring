@@ -52,19 +52,17 @@
                             </li>
                                 
                             <li><a href="http://localhost:8090/en_uav_cam/uavcam.html">现场视频</a></li>
-                            <li><a href="#">分析报告</a>
-                                <ul>
+                            <li><a href="../ylogin_register.html">管理员</a>
+                                <!--<ul>
                                     <li><a href="blog.html">Blog Masonry</a></li>
                                     <li><a href="blog-single.html">Post Single</a></li>
-                                </ul>
+                                </ul>-->
                             </li>
-                            <li><a href="#">关于</a>
-                                <ul>
-                                    <li><a href="our-team.html">Our Team</a></li>
-                                    <li><a href="archives.html">Archives</a></li>
-                                    <li><a href="grids.html">Columns</a></li>
-                                    <li><a href="404.html">404 Page</a></li>
-                                </ul>
+                             <li><a href="#">实时数据可视化</a>
+                              <ul>
+                              <li><a href="../yrealtime_tem_hum.html">温湿度实时数据</a></li>
+                              <li><a href="../yrealtime_pm25.html">pm25实时数据</a></li>
+                              </ul>
                             </li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
@@ -76,26 +74,39 @@
                     <li><a href="../index.html">首页</a></li>
                     <li><a href="services.jsp">无人机地图数据</a></li>
                     <li><a href="http://localhost:8090/en_uav_cam/uavcam.html">现场视频</a></li>
-                    <li><a href="#">分析报告</a>
-                        <ul>
-                            <li><a href="blog.html">Blog Masonry</a></li>
-                            <li><a href="blog-single.html">Post Single</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">关于</a>
-                        <ul>
-                            <li><a href="our-team.html">Our Team</a></li>
-                            <li><a href="archives.html">Archives</a></li>
-                            <li><a href="grids.html">Columns</a></li>
-                            <li><a href="404.html">404 Page</a></li>
-                        </ul>
-                    </li>
+                   <li><a href="../ylogin_register.html">管理员</a>
+                                <!--<ul>
+                                    <li><a href="blog.html">Blog Masonry</a></li>
+                                    <li><a href="blog-single.html">Post Single</a></li>
+                                </ul>-->
+                            </li>
+                    <li><a href="#">实时数据可视化</a>
+                              <ul>
+                              <li><a href="../yrealtime_tem_hum.html">温湿度实时数据</a></li>
+                              <li><a href="../yrealtime_pm25.html">pm25实时数据</a></li>
+                              </ul>
+                            </li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
         </header> <!-- /.site-header -->
 
-        <div class="content-wrapper">
+       
+       
+       
+       <div id="pricing" class="pricing">
+	<div class="container">
+		
+		<div id="allmap" style="height:600px"></div>
+    
+     <script src="../script/jquery-1.8.3.min.js" ></script>
+  <script src="../script/map_view.js"></script>
+
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=B7d71c582e960e8bc1eae517183b5f77"></script>
+
+	</div>
+	</div>
+         <div class="content-wrapper">
             <div class="inner-container container">
                 <div class="row">
                     <div class="section-header col-md-12">
@@ -151,21 +162,6 @@
                     </div> <!-- /.service-item -->
                </div> <!-- /.inner-content -->  
         </div> <!-- /.content-wrapper -->
-       
-       
-       <div id="pricing" class="pricing">
-	<div class="container">
-		
-		<div id="allmap" style="height:600px"></div>
-    
-     <script src="../script/jquery-1.8.3.min.js" ></script>
-  <script src="../script/map_view.js"></script>
-
-  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=B7d71c582e960e8bc1eae517183b5f77"></script>
-
-	</div>
-	</div>
-        
         
       
       
