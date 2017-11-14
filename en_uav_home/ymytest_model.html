@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%@page contentType="text/html; charset=UTF-8"
+    import="java.sql.*,java.io.*"%>
+    <%@ include file="ylogin_check.jsp"%>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -90,10 +92,17 @@
               <div style="text-align:center">
               <table id="ta" border="1 px">
               <tr align="center"> <th colspan ="3"><font size="6" color="black">分析报告</th></tr>
+              <%
+                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
+                 String str_date1 = formatter.format(currentTime); //将日期时间格式化
+                 String str_date2 = currentTime.toString(); //将Date型日期时间转换成字符串形式
+                 %>
               <tr><th>时间</th><th>内容</th><th>备注</th></tr>
-              <tr><th>时间</th><th><input id="ctime" name="" type="text" width="100%"/></th><th><input id="btime" name="" type="text" width="100%"/></th></tr>
-              <tr><th>负责人</th><th><input id="ccharger" name="" type="text"/></th><th><input id="bcharger" name="" type="text" width="100%"/></th></tr>
-              <tr><th>操作员</th><th><input id="coperator" name="" type="text"/></th><th><input id="boperator" name="" type="text" width="100%"/></th></tr>
+              <tr><th>时间</th><th><%out.println("<p>"+str_date2+"</p>");%></th><th><%out.println("<p>"+str_date2+"</p>");%></th></tr>
+
+              <tr><th>负责人</th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th></tr>
+              <tr><th>操作员</th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th></tr>
               <tr><th>温度描述</th><th>
               <select>
                 <option value ="1ow1">极高（与真实数据相比）</option>
@@ -102,7 +111,7 @@
                 <option value="high1">偏低（与真实数据相比）</option>
                 <option value="high2">极低（与真实数据相比）</option>
               </select>
-              </th><th><input name="" type="text" width="100%"/></th></tr>
+            </th><th><input id="ttem" name="" type="text" width="100%"/></th></tr>
               <tr><th>湿度描述</th><th>
               <select>
                 <option value ="1ow1">极高（与真实数据相比）</option>
@@ -111,7 +120,7 @@
                 <option value="high1">偏低（与真实数据相比）</option>
                 <option value="high2">极低（与真实数据相比）</option>
               </select>
-              </th><th><input name="" type="text" width="100%"/></th></tr>
+            </th><th><input id="thum" name="" type="text" width="100%"/></th></tr>
               <tr><th>Pm25描述</th><th>
               <select>
                 <option value ="1ow1">极高（与真实数据相比）</option>
@@ -120,17 +129,17 @@
                 <option value="high1">偏低（与真实数据相比）</option>
                 <option value="high2">极低（与真实数据相比）</option>
               </select>
-              </th><th><input name="" type="text" width="100%"/></th></tr>
+            </th><th><input id="tpm25" name="" type="text" width="100%"/></th></tr>
               <tr><th>巡航路线描述</th><th><select>
                 <option value ="1ow1">未偏离</option>
                 <option value ="low2">部分偏离</option>
                 <option value="moderate">严重偏离</option>
-              </select></th><th><input name="" type="text" width="100%"/></th></tr>
+              </select></th><th><input id="troute" name="" type="text" width="100%"/></th></tr>
               <tr height="120px"><th height="120px">其他(不超过105个字符)</th><td height="120px" colspan ="2"><textarea  id="cother" rows="5" cols="45" height: 100% width:100% name="" type="text"></textarea>
               </td></tr>
               </table>
               <p>
-                <input type="button" value="提交" style="height=20px;width=100px;" onclick="confirm()"/>
+                <input type="button" value="确认" style="height=20px;width=100px;" onclick="confirm()"/>
                 <input type="button" value="启用编辑" style="height=20px;width=100px;" onclick="reedit()"/>
                 <input type="button" value="重置" style="height=20px;width=100px;" onclick="reset()"/>
                 <input type="button" value="打印" style="height=20px;width=100px;" onclick="doPrint()"/>
@@ -161,103 +170,833 @@
         <script text="javascript">
         function confirm()
         {
-          var ctime=document.getElementById("ctime");
-          ctime.style.border="none";
-          ctime.readOnly=true;
-          var btime=document.getElementById("btime");
-          btime.style.border="none";
-          btime.readOnly=true;
+          var ttem=document.getElementById("ttem");
+          ttem.style.border="none";
+          ttem.readOnly=true;
+          var thum=document.getElementById("thum");
+          thum.style.border="none";
+          thum.readOnly=true;
 
-          var ccharger=document.getElementById("ccharger");
-          ccharger.style.border="none";
-          ccharger.readOnly=true;
-          var bcharger=document.getElementById("bcharger");
-          bcharger.style.border="none";
-          bcharger.readOnly=true;
-
-          var coperator=document.getElementById("coperator");
-          coperator.style.border="none";
-          coperator.readOnly=true;
-          var boperator=document.getElementById("boperator");
-          boperator.style.border="none";
-          boperator.readOnly=true;
+          var tpm25=document.getElementById("tpm25");
+          tpm25.style.border="none";
+          tpm25.readOnly=true;
+          var troute=document.getElementById("troute");
+          troute.style.border="none";
+          troute.readOnly=true;
 
           var cother=document.getElementById("cother");
           cother.style.border="none";
           cother.readOnly=true;
-          var bother=document.getElementById("bother");
-          bother.style.border="none";
-          bother.readOnly=true;
+          Alert("请通过打印或者导出方式进行保存");
         }
 
         function reedit()
         {
-          var ctime=document.getElementById("ctime");
-          ctime.style.border="1px solid #000";
-          ctime.readOnly=false;
-          var btime=document.getElementById("btime");
-          btime.style.border="1px solid #000";
-          btime.readOnly=false;
+          var ttem=document.getElementById("ttem");
+          //ttem.style.border="1px solid #000";
+          ttem.readOnly=false;
+          var thum=document.getElementById("thum");
+          //thum.style.border="1px solid #000";
+          thum.readOnly=false;
 
-          var ccharger=document.getElementById("ccharger");
-          ccharger.style.border="1px solid #000";
-          ccharger.readOnly=false;
-          var bcharger=document.getElementById("bcharger");
-          bcharger.style.border="1px solid #000";
-          bcharger.readOnly=false;
-
-          var coperator=document.getElementById("coperator");
-          coperator.style.border="1px solid #000";
-          coperator.readOnly=false;
-          var boperator=document.getElementById("boperator");
-          boperator.style.border="1px solid #000";
-          boperator.readOnly=false;
+          var tpm25=document.getElementById("tpm25");
+          //tpm25.style.border="1px solid #000";
+          tpm25.readOnly=false;
+          var troute=document.getElementById("troute");
+          //troute.style.border="1px solid #000";
+          troute.readOnly=false;
 
           var cother=document.getElementById("cother");
-          cother.style.border="1px solid #000";
+          //cother.style.border="1px solid #000";
           cother.readOnly=false;
-          var bother=document.getElementById("bother");
-          bother.style.border="1px solid #000";
-          bother.readOnly=false;
         }
 
         function reset()
         {
-          var ctime=document.getElementById("ctime");
+          var ttem=document.getElementById("ttem");
           //ctime.style.border="1px solid #000";
-          ctime.readOnly=false;
-          ctime.value="";
-          var btime=document.getElementById("btime");
+          ttem.readOnly=false;
+          ttem.value="";
+          var thum=document.getElementById("thum");
           //btime.style.border="1px solid #000";
-          btime.readOnly=false;
-          btime.value="";
+          thum.readOnly=false;
+          thum.value="";
 
-          var ccharger=document.getElementById("ccharger");
+          var tpm25=document.getElementById("tpm25");
           //ccharger.style.border="1px solid #000";
-          ccharger.readOnly=false;
-          ccharger.value="";
-          var bcharger=document.getElementById("bcharger");
+          tpm25.readOnly=false;
+          tpm25.value="";
+          var troute=document.getElementById("troute");
           //bcharger.style.border="1px solid #000";
-          bcharger.readOnly=false;
-          bcharger.value="";
-
-          var coperator=document.getElementById("coperator");
-          //coperator.style.border="1px solid #000";
-          coperator.readOnly=false;
-          coperator.value="";
-          var boperator=document.getElementById("boperator");
-          //boperator.style.border="1px solid #000";
-          boperator.readOnly=false;
-          boperator.value="";
+          troute.readOnly=false;
+          troute.value="";
 
           var cother=document.getElementById("cother");
           //cother.style.border="1px solid #000";
           cother.readOnly=false;
           cother.value="";
-          var bother=document.getElementById("bother");
-          //bother.style.border="1px solid #000";
-          bother.readOnly=false;
-          bother.value="";
+        }
+
+
+
+        //自动关闭提示框
+        function Alert(str) {
+            var msgw,msgh,bordercolor;
+            msgw=350;//提示窗口的宽度
+            msgh=80;//提示窗口的高度
+            titleheight=25 //提示窗口标题高度
+            bordercolor="#336699";//提示窗口的边框颜色
+            titlecolor="#99CCFF";//提示窗口的标题颜色
+            var sWidth,sHeight;
+            //获取当前窗口尺寸
+            sWidth = document.body.offsetWidth;
+            sHeight = document.body.offsetHeight;
+        //    //背景div
+            var bgObj=document.createElement("div");
+            bgObj.setAttribute('id','alertbgDiv');
+            bgObj.style.position="absolute";
+            bgObj.style.top="0";
+            bgObj.style.background="#E8E8E8";
+            bgObj.style.filter="progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75";
+            bgObj.style.opacity="0.6";
+            bgObj.style.left="0";
+            bgObj.style.width = sWidth + "px";
+            bgObj.style.height = sHeight + "px";
+            bgObj.style.zIndex = "10000";
+            document.body.appendChild(bgObj);
+            //创建提示窗口的div
+            var msgObj = document.createElement("div")
+            msgObj.setAttribute("id","alertmsgDiv");
+            msgObj.setAttribute("align","center");
+            msgObj.style.background="white";
+            msgObj.style.border="1px solid " + bordercolor;
+            msgObj.style.position = "absolute";
+            msgObj.style.left = "50%";
+            msgObj.style.font="12px/1.6em Verdana, Geneva, Arial, Helvetica, sans-serif";
+            //窗口距离左侧和顶端的距离
+            msgObj.style.marginLeft = "-225px";
+            //窗口被卷去的高+（屏幕可用工作区高/2）-150
+            msgObj.style.top = document.body.scrollTop+(window.screen.availHeight/2)-150 +"px";
+            msgObj.style.width = msgw + "px";
+            msgObj.style.height = msgh + "px";
+            msgObj.style.textAlign = "center";
+            msgObj.style.lineHeight ="25px";
+            msgObj.style.zIndex = "10001";
+            document.body.appendChild(msgObj);
+            //提示信息标题
+            var title=document.createElement("h4");
+            title.setAttribute("id","alertmsgTitle");
+            title.setAttribute("align","left");
+            title.style.margin="0";
+            title.style.padding="3px";
+            title.style.background = bordercolor;
+            title.style.filter="progid:DXImageTransform.Microsoft.Alpha(startX=20, startY=20, finishX=100, finishY=100,style=1,opacity=75,finishOpacity=100);";
+            title.style.opacity="0.75";
+            title.style.border="1px solid " + bordercolor;
+            title.style.height="18px";
+            title.style.font="12px Verdana, Geneva, Arial, Helvetica, sans-serif";
+            title.style.color="white";
+            title.innerHTML="提示信息";
+            document.getElementById("alertmsgDiv").appendChild(title);
+            //提示信息
+            var txt = document.createElement("p");
+            txt.setAttribute("id","msgTxt");
+            txt.style.margin="16px 0";
+            txt.innerHTML = str;
+            document.getElementById("alertmsgDiv").appendChild(txt);
+            //设置关闭时间
+            window.setTimeout("closewin()",2000);
+        }
+        function closewin() {
+            document.body.removeChild(document.getElementById("alertbgDiv"));
+            document.getElementById("alertmsgDiv").removeChild(document.getElementById("alertmsgTitle"));
+            document.body.removeChild(document.getElementById("alertmsgDiv"));
+        }
+
+
+        function doPrint() {
+            window.print();
+        }
+
+        function exportpdf(){
+        alert(0);
+            html2canvas(document.getElementById("ta"), {
+                onrendered: function(canvas) {
+
+                    //通过html2canvas将html渲染成canvas，然后获取图片数据
+                    var imgData = canvas.toDataURL('image/jpeg');
+
+                    //初始化pdf，设置相应格式
+                    var doc = new jsPDF("p", "mm", "a4");
+
+                    //这里设置的是a4纸张尺寸
+                    doc.addImage(imgData, 'JPEG', 0, 0,210,297);
+
+                    //输出保存命名为content的pdf
+                    doc.save('content.pdf');
+                }
+            });
+        }
+        </script>
+
+    </body>
+</html>
+<%@page contentType="text/html; charset=UTF-8"
+    import="java.sql.*,java.io.*"%>
+    <%@ include file="ylogin_check.jsp"%>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Artcore - Projects 3 Columns</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+
+
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/templatemo-misc.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
+        <style>
+                /*  在此处填写叠层样式  */
+                body, html{
+                    height: 100%;
+                    width: 100%;
+                    margin: 0; padding: 0;
+                }
+                table {
+                    height: 80%;
+                    width: 35%;         /*  必须设置一个宽度， margin: 0 auto才能使之居于父组件中央*/
+                    margin: 5px auto;  /*  通过设置外边距（margin）中的左右外边距属性为auto使之居于父组件（body）中间*/
+                }
+                    table tr{
+                        height: 60px;
+                        width: 100%;
+                    }
+                    table>tr>th{
+                        height: 100%;
+                        width:100%;
+                    }
+        </style>
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="#/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+        <section id="pageloader">
+            <div class="loader-item fa fa-spin colored-border"></div>
+        </section> <!-- /#pageloader -->
+
+        <header class="site-header container-fluid">
+            <div class="top-header">
+                <div class="logo col-md-6 col-sm-6">
+                  <h1><a href="index.html"><em>无人机</em>环境监测</a></h1>
+                  <span>by PYX小组</span>
+                </div> <!-- /.logo -->
+            </div> <!-- /.top-header -->
+            <div class="main-header">
+                <div class="row">
+                    <div class="main-header-left col-md-3 col-sm-6 col-xs-8">
+                        <a id="search-icon" class="btn-left fa fa-search" href="#search-overlay"></a>
+                        <div id="search-overlay">
+                            <a href="#search-overlay" class="close-search"><i class="fa fa-times-circle"></i></a>
+                            <div class="search-form-holder">
+                                <h2>Type keywords and hit enter</h2>
+                                <form id="search-form" action="#">
+                                    <input type="search" name="s" placeholder="" autocomplete="off" />
+                                </form>
+                            </div>
+                        </div><!-- #search-overlay -->
+                    </div> <!-- /.main-header-left -->
+                    <div class="menu-wrapper col-md-9 col-sm-6 col-xs-4">
+                        <a href="#" class="toggle-menu visible-sm visible-xs"><i class="fa fa-bars"></i></a>
+                        <ul class="sf-menu hidden-xs hidden-sm">
+                          <li><a href="index.html">返回主页</a></li>
+                          <li><a href="ymanager_stuff.html">返回上一页</a></li>
+                        </ul>
+                    </div> <!-- /.menu-wrapper -->
+                </div> <!-- /.row -->
+            </div> <!-- /.main-header -->
+            <div id="responsive-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </header> <!-- /.site-header -->
+
+        <div class="content-wrapper">
+            <div class="inner-container container">
+              <div style="text-align:center">
+              <table id="ta" border="1 px">
+              <tr align="center"> <th colspan ="3"><font size="6" color="black">分析报告</th></tr>
+              <%
+                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
+                 String str_date1 = formatter.format(currentTime); //将日期时间格式化
+                 String str_date2 = currentTime.toString(); //将Date型日期时间转换成字符串形式
+                 %>
+              <tr><th>时间</th><th>内容</th><th>备注</th></tr>
+              <tr><th>时间</th><th><%out.println("<p>"+str_date2+"</p>");%></th><th><%out.println("<p>"+str_date2+"</p>");%></th></tr>
+
+              <tr><th>负责人</th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th></tr>
+              <tr><th>操作员</th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th></tr>
+              <tr><th>温度描述</th><th>
+              <select>
+                <option value ="1ow1">极高（与真实数据相比）</option>
+                <option value ="low2">偏高（与真实数据相比）</option>
+                <option value="moderate">准确（与真实数据相比）</option>
+                <option value="high1">偏低（与真实数据相比）</option>
+                <option value="high2">极低（与真实数据相比）</option>
+              </select>
+            </th><th><input id="ttem" name="" type="text" width="100%"/></th></tr>
+              <tr><th>湿度描述</th><th>
+              <select>
+                <option value ="1ow1">极高（与真实数据相比）</option>
+                <option value ="low2">偏高（与真实数据相比）</option>
+                <option value="moderate">准确（与真实数据相比）</option>
+                <option value="high1">偏低（与真实数据相比）</option>
+                <option value="high2">极低（与真实数据相比）</option>
+              </select>
+            </th><th><input id="thum" name="" type="text" width="100%"/></th></tr>
+              <tr><th>Pm25描述</th><th>
+              <select>
+                <option value ="1ow1">极高（与真实数据相比）</option>
+                <option value ="low2">偏高（与真实数据相比）</option>
+                <option value="moderate">准确（与真实数据相比）</option>
+                <option value="high1">偏低（与真实数据相比）</option>
+                <option value="high2">极低（与真实数据相比）</option>
+              </select>
+            </th><th><input id="tpm25" name="" type="text" width="100%"/></th></tr>
+              <tr><th>巡航路线描述</th><th><select>
+                <option value ="1ow1">未偏离</option>
+                <option value ="low2">部分偏离</option>
+                <option value="moderate">严重偏离</option>
+              </select></th><th><input id="troute" name="" type="text" width="100%"/></th></tr>
+              <tr height="120px"><th height="120px">其他(不超过105个字符)</th><td height="120px" colspan ="2"><textarea  id="cother" rows="5" cols="45" height: 100% width:100% name="" type="text"></textarea>
+              </td></tr>
+              </table>
+              <p>
+                <input type="button" value="确认" style="height=20px;width=100px;" onclick="confirm()"/>
+                <input type="button" value="启用编辑" style="height=20px;width=100px;" onclick="reedit()"/>
+                <input type="button" value="重置" style="height=20px;width=100px;" onclick="reset()"/>
+                <input type="button" value="打印" style="height=20px;width=100px;" onclick="doPrint()"/>
+                <input type="button" value="导出pdf" style="height=20px;width=100px;" onclick="exportpdf()"/>
+
+              </p>
+              </div>
+            </div> <!-- /.inner-content -->
+        </div> <!-- /.content-wrapper -->
+
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Preloader -->
+        <script type="text/javascript">
+            //<![CDATA[
+            $(window).load(function() {
+                $('.loader-item').fadeOut();
+                    $('#pageloader').delay(350).fadeOut('slow');
+                $('body').delay(350).css({'overflow-y':'visible'});
+            })
+            //]]>
+        </script>
+        <script src="js/jspdf.debug.js"></script>
+        <script src="js/html2canvas.js"></script>
+        <script text="javascript">
+        function confirm()
+        {
+          var ttem=document.getElementById("ttem");
+          ttem.style.border="none";
+          ttem.readOnly=true;
+          var thum=document.getElementById("thum");
+          thum.style.border="none";
+          thum.readOnly=true;
+
+          var tpm25=document.getElementById("tpm25");
+          tpm25.style.border="none";
+          tpm25.readOnly=true;
+          var troute=document.getElementById("troute");
+          troute.style.border="none";
+          troute.readOnly=true;
+
+          var cother=document.getElementById("cother");
+          cother.style.border="none";
+          cother.readOnly=true;
+          Alert("请通过打印或者导出方式进行保存");
+        }
+
+        function reedit()
+        {
+          var ttem=document.getElementById("ttem");
+          //ttem.style.border="1px solid #000";
+          ttem.readOnly=false;
+          var thum=document.getElementById("thum");
+          //thum.style.border="1px solid #000";
+          thum.readOnly=false;
+
+          var tpm25=document.getElementById("tpm25");
+          //tpm25.style.border="1px solid #000";
+          tpm25.readOnly=false;
+          var troute=document.getElementById("troute");
+          //troute.style.border="1px solid #000";
+          troute.readOnly=false;
+
+          var cother=document.getElementById("cother");
+          //cother.style.border="1px solid #000";
+          cother.readOnly=false;
+        }
+
+        function reset()
+        {
+          var ttem=document.getElementById("ttem");
+          //ctime.style.border="1px solid #000";
+          ttem.readOnly=false;
+          ttem.value="";
+          var thum=document.getElementById("thum");
+          //btime.style.border="1px solid #000";
+          thum.readOnly=false;
+          thum.value="";
+
+          var tpm25=document.getElementById("tpm25");
+          //ccharger.style.border="1px solid #000";
+          tpm25.readOnly=false;
+          tpm25.value="";
+          var troute=document.getElementById("troute");
+          //bcharger.style.border="1px solid #000";
+          troute.readOnly=false;
+          troute.value="";
+
+          var cother=document.getElementById("cother");
+          //cother.style.border="1px solid #000";
+          cother.readOnly=false;
+          cother.value="";
+        }
+
+
+
+        //自动关闭提示框
+        function Alert(str) {
+            var msgw,msgh,bordercolor;
+            msgw=350;//提示窗口的宽度
+            msgh=80;//提示窗口的高度
+            titleheight=25 //提示窗口标题高度
+            bordercolor="#336699";//提示窗口的边框颜色
+            titlecolor="#99CCFF";//提示窗口的标题颜色
+            var sWidth,sHeight;
+            //获取当前窗口尺寸
+            sWidth = document.body.offsetWidth;
+            sHeight = document.body.offsetHeight;
+        //    //背景div
+            var bgObj=document.createElement("div");
+            bgObj.setAttribute('id','alertbgDiv');
+            bgObj.style.position="absolute";
+            bgObj.style.top="0";
+            bgObj.style.background="#E8E8E8";
+            bgObj.style.filter="progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75";
+            bgObj.style.opacity="0.6";
+            bgObj.style.left="0";
+            bgObj.style.width = sWidth + "px";
+            bgObj.style.height = sHeight + "px";
+            bgObj.style.zIndex = "10000";
+            document.body.appendChild(bgObj);
+            //创建提示窗口的div
+            var msgObj = document.createElement("div")
+            msgObj.setAttribute("id","alertmsgDiv");
+            msgObj.setAttribute("align","center");
+            msgObj.style.background="white";
+            msgObj.style.border="1px solid " + bordercolor;
+            msgObj.style.position = "absolute";
+            msgObj.style.left = "50%";
+            msgObj.style.font="12px/1.6em Verdana, Geneva, Arial, Helvetica, sans-serif";
+            //窗口距离左侧和顶端的距离
+            msgObj.style.marginLeft = "-225px";
+            //窗口被卷去的高+（屏幕可用工作区高/2）-150
+            msgObj.style.top = document.body.scrollTop+(window.screen.availHeight/2)-150 +"px";
+            msgObj.style.width = msgw + "px";
+            msgObj.style.height = msgh + "px";
+            msgObj.style.textAlign = "center";
+            msgObj.style.lineHeight ="25px";
+            msgObj.style.zIndex = "10001";
+            document.body.appendChild(msgObj);
+            //提示信息标题
+            var title=document.createElement("h4");
+            title.setAttribute("id","alertmsgTitle");
+            title.setAttribute("align","left");
+            title.style.margin="0";
+            title.style.padding="3px";
+            title.style.background = bordercolor;
+            title.style.filter="progid:DXImageTransform.Microsoft.Alpha(startX=20, startY=20, finishX=100, finishY=100,style=1,opacity=75,finishOpacity=100);";
+            title.style.opacity="0.75";
+            title.style.border="1px solid " + bordercolor;
+            title.style.height="18px";
+            title.style.font="12px Verdana, Geneva, Arial, Helvetica, sans-serif";
+            title.style.color="white";
+            title.innerHTML="提示信息";
+            document.getElementById("alertmsgDiv").appendChild(title);
+            //提示信息
+            var txt = document.createElement("p");
+            txt.setAttribute("id","msgTxt");
+            txt.style.margin="16px 0";
+            txt.innerHTML = str;
+            document.getElementById("alertmsgDiv").appendChild(txt);
+            //设置关闭时间
+            window.setTimeout("closewin()",2000);
+        }
+        function closewin() {
+            document.body.removeChild(document.getElementById("alertbgDiv"));
+            document.getElementById("alertmsgDiv").removeChild(document.getElementById("alertmsgTitle"));
+            document.body.removeChild(document.getElementById("alertmsgDiv"));
+        }
+
+
+        function doPrint() {
+            window.print();
+        }
+
+        function exportpdf(){
+        alert(0);
+            html2canvas(document.getElementById("ta"), {
+                onrendered: function(canvas) {
+
+                    //通过html2canvas将html渲染成canvas，然后获取图片数据
+                    var imgData = canvas.toDataURL('image/jpeg');
+
+                    //初始化pdf，设置相应格式
+                    var doc = new jsPDF("p", "mm", "a4");
+
+                    //这里设置的是a4纸张尺寸
+                    doc.addImage(imgData, 'JPEG', 0, 0,210,297);
+
+                    //输出保存命名为content的pdf
+                    doc.save('content.pdf');
+                }
+            });
+        }
+        </script>
+
+    </body>
+</html>
+<%@page contentType="text/html; charset=UTF-8"
+    import="java.sql.*,java.io.*"%>
+    <%@ include file="ylogin_check.jsp"%>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Artcore - Projects 3 Columns</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+
+
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/templatemo-misc.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
+        <style>
+                /*  在此处填写叠层样式  */
+                body, html{
+                    height: 100%;
+                    width: 100%;
+                    margin: 0; padding: 0;
+                }
+                table {
+                    height: 80%;
+                    width: 35%;         /*  必须设置一个宽度， margin: 0 auto才能使之居于父组件中央*/
+                    margin: 5px auto;  /*  通过设置外边距（margin）中的左右外边距属性为auto使之居于父组件（body）中间*/
+                }
+                    table tr{
+                        height: 60px;
+                        width: 100%;
+                    }
+                    table>tr>th{
+                        height: 100%;
+                        width:100%;
+                    }
+        </style>
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="#/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+        <section id="pageloader">
+            <div class="loader-item fa fa-spin colored-border"></div>
+        </section> <!-- /#pageloader -->
+
+        <header class="site-header container-fluid">
+            <div class="top-header">
+                <div class="logo col-md-6 col-sm-6">
+                  <h1><a href="index.html"><em>无人机</em>环境监测</a></h1>
+                  <span>by PYX小组</span>
+                </div> <!-- /.logo -->
+            </div> <!-- /.top-header -->
+            <div class="main-header">
+                <div class="row">
+                    <div class="main-header-left col-md-3 col-sm-6 col-xs-8">
+                        <a id="search-icon" class="btn-left fa fa-search" href="#search-overlay"></a>
+                        <div id="search-overlay">
+                            <a href="#search-overlay" class="close-search"><i class="fa fa-times-circle"></i></a>
+                            <div class="search-form-holder">
+                                <h2>Type keywords and hit enter</h2>
+                                <form id="search-form" action="#">
+                                    <input type="search" name="s" placeholder="" autocomplete="off" />
+                                </form>
+                            </div>
+                        </div><!-- #search-overlay -->
+                    </div> <!-- /.main-header-left -->
+                    <div class="menu-wrapper col-md-9 col-sm-6 col-xs-4">
+                        <a href="#" class="toggle-menu visible-sm visible-xs"><i class="fa fa-bars"></i></a>
+                        <ul class="sf-menu hidden-xs hidden-sm">
+                          <li><a href="index.html">返回主页</a></li>
+                          <li><a href="ymanager_stuff.html">返回上一页</a></li>
+                        </ul>
+                    </div> <!-- /.menu-wrapper -->
+                </div> <!-- /.row -->
+            </div> <!-- /.main-header -->
+            <div id="responsive-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </header> <!-- /.site-header -->
+
+        <div class="content-wrapper">
+            <div class="inner-container container">
+              <div style="text-align:center">
+              <table id="ta" border="1 px">
+              <tr align="center"> <th colspan ="3"><font size="6" color="black">分析报告</th></tr>
+              <%
+                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
+                 String str_date1 = formatter.format(currentTime); //将日期时间格式化
+                 String str_date2 = currentTime.toString(); //将Date型日期时间转换成字符串形式
+                 %>
+              <tr><th>时间</th><th>内容</th><th>备注</th></tr>
+              <tr><th>时间</th><th><%out.println("<p>"+str_date2+"</p>");%></th><th><%out.println("<p>"+str_date2+"</p>");%></th></tr>
+
+              <tr><th>负责人</th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th></tr>
+              <tr><th>操作员</th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th><th><%out.println("<p>"+session.getAttribute("users")+"</p>");%></th></tr>
+              <tr><th>温度描述</th><th>
+              <select>
+                <option value ="1ow1">极高（与真实数据相比）</option>
+                <option value ="low2">偏高（与真实数据相比）</option>
+                <option value="moderate">准确（与真实数据相比）</option>
+                <option value="high1">偏低（与真实数据相比）</option>
+                <option value="high2">极低（与真实数据相比）</option>
+              </select>
+            </th><th><input id="ttem" name="" type="text" width="100%"/></th></tr>
+              <tr><th>湿度描述</th><th>
+              <select>
+                <option value ="1ow1">极高（与真实数据相比）</option>
+                <option value ="low2">偏高（与真实数据相比）</option>
+                <option value="moderate">准确（与真实数据相比）</option>
+                <option value="high1">偏低（与真实数据相比）</option>
+                <option value="high2">极低（与真实数据相比）</option>
+              </select>
+            </th><th><input id="thum" name="" type="text" width="100%"/></th></tr>
+              <tr><th>Pm25描述</th><th>
+              <select>
+                <option value ="1ow1">极高（与真实数据相比）</option>
+                <option value ="low2">偏高（与真实数据相比）</option>
+                <option value="moderate">准确（与真实数据相比）</option>
+                <option value="high1">偏低（与真实数据相比）</option>
+                <option value="high2">极低（与真实数据相比）</option>
+              </select>
+            </th><th><input id="tpm25" name="" type="text" width="100%"/></th></tr>
+              <tr><th>巡航路线描述</th><th><select>
+                <option value ="1ow1">未偏离</option>
+                <option value ="low2">部分偏离</option>
+                <option value="moderate">严重偏离</option>
+              </select></th><th><input id="troute" name="" type="text" width="100%"/></th></tr>
+              <tr height="120px"><th height="120px">其他(不超过105个字符)</th><td height="120px" colspan ="2"><textarea  id="cother" rows="5" cols="45" height: 100% width:100% name="" type="text"></textarea>
+              </td></tr>
+              </table>
+              <p>
+                <input type="button" value="确认" style="height=20px;width=100px;" onclick="confirm()"/>
+                <input type="button" value="启用编辑" style="height=20px;width=100px;" onclick="reedit()"/>
+                <input type="button" value="重置" style="height=20px;width=100px;" onclick="reset()"/>
+                <input type="button" value="打印" style="height=20px;width=100px;" onclick="doPrint()"/>
+                <input type="button" value="导出pdf" style="height=20px;width=100px;" onclick="exportpdf()"/>
+
+              </p>
+              </div>
+            </div> <!-- /.inner-content -->
+        </div> <!-- /.content-wrapper -->
+
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Preloader -->
+        <script type="text/javascript">
+            //<![CDATA[
+            $(window).load(function() {
+                $('.loader-item').fadeOut();
+                    $('#pageloader').delay(350).fadeOut('slow');
+                $('body').delay(350).css({'overflow-y':'visible'});
+            })
+            //]]>
+        </script>
+        <script src="js/jspdf.debug.js"></script>
+        <script src="js/html2canvas.js"></script>
+        <script text="javascript">
+        function confirm()
+        {
+          var ttem=document.getElementById("ttem");
+          ttem.style.border="none";
+          ttem.readOnly=true;
+          var thum=document.getElementById("thum");
+          thum.style.border="none";
+          thum.readOnly=true;
+
+          var tpm25=document.getElementById("tpm25");
+          tpm25.style.border="none";
+          tpm25.readOnly=true;
+          var troute=document.getElementById("troute");
+          troute.style.border="none";
+          troute.readOnly=true;
+
+          var cother=document.getElementById("cother");
+          cother.style.border="none";
+          cother.readOnly=true;
+          Alert("请通过打印或者导出方式进行保存");
+        }
+
+        function reedit()
+        {
+          var ttem=document.getElementById("ttem");
+          //ttem.style.border="1px solid #000";
+          ttem.readOnly=false;
+          var thum=document.getElementById("thum");
+          //thum.style.border="1px solid #000";
+          thum.readOnly=false;
+
+          var tpm25=document.getElementById("tpm25");
+          //tpm25.style.border="1px solid #000";
+          tpm25.readOnly=false;
+          var troute=document.getElementById("troute");
+          //troute.style.border="1px solid #000";
+          troute.readOnly=false;
+
+          var cother=document.getElementById("cother");
+          //cother.style.border="1px solid #000";
+          cother.readOnly=false;
+        }
+
+        function reset()
+        {
+          var ttem=document.getElementById("ttem");
+          //ctime.style.border="1px solid #000";
+          ttem.readOnly=false;
+          ttem.value="";
+          var thum=document.getElementById("thum");
+          //btime.style.border="1px solid #000";
+          thum.readOnly=false;
+          thum.value="";
+
+          var tpm25=document.getElementById("tpm25");
+          //ccharger.style.border="1px solid #000";
+          tpm25.readOnly=false;
+          tpm25.value="";
+          var troute=document.getElementById("troute");
+          //bcharger.style.border="1px solid #000";
+          troute.readOnly=false;
+          troute.value="";
+
+          var cother=document.getElementById("cother");
+          //cother.style.border="1px solid #000";
+          cother.readOnly=false;
+          cother.value="";
+        }
+
+
+
+        //自动关闭提示框
+        function Alert(str) {
+            var msgw,msgh,bordercolor;
+            msgw=350;//提示窗口的宽度
+            msgh=80;//提示窗口的高度
+            titleheight=25 //提示窗口标题高度
+            bordercolor="#336699";//提示窗口的边框颜色
+            titlecolor="#99CCFF";//提示窗口的标题颜色
+            var sWidth,sHeight;
+            //获取当前窗口尺寸
+            sWidth = document.body.offsetWidth;
+            sHeight = document.body.offsetHeight;
+        //    //背景div
+            var bgObj=document.createElement("div");
+            bgObj.setAttribute('id','alertbgDiv');
+            bgObj.style.position="absolute";
+            bgObj.style.top="0";
+            bgObj.style.background="#E8E8E8";
+            bgObj.style.filter="progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75";
+            bgObj.style.opacity="0.6";
+            bgObj.style.left="0";
+            bgObj.style.width = sWidth + "px";
+            bgObj.style.height = sHeight + "px";
+            bgObj.style.zIndex = "10000";
+            document.body.appendChild(bgObj);
+            //创建提示窗口的div
+            var msgObj = document.createElement("div")
+            msgObj.setAttribute("id","alertmsgDiv");
+            msgObj.setAttribute("align","center");
+            msgObj.style.background="white";
+            msgObj.style.border="1px solid " + bordercolor;
+            msgObj.style.position = "absolute";
+            msgObj.style.left = "50%";
+            msgObj.style.font="12px/1.6em Verdana, Geneva, Arial, Helvetica, sans-serif";
+            //窗口距离左侧和顶端的距离
+            msgObj.style.marginLeft = "-225px";
+            //窗口被卷去的高+（屏幕可用工作区高/2）-150
+            msgObj.style.top = document.body.scrollTop+(window.screen.availHeight/2)-150 +"px";
+            msgObj.style.width = msgw + "px";
+            msgObj.style.height = msgh + "px";
+            msgObj.style.textAlign = "center";
+            msgObj.style.lineHeight ="25px";
+            msgObj.style.zIndex = "10001";
+            document.body.appendChild(msgObj);
+            //提示信息标题
+            var title=document.createElement("h4");
+            title.setAttribute("id","alertmsgTitle");
+            title.setAttribute("align","left");
+            title.style.margin="0";
+            title.style.padding="3px";
+            title.style.background = bordercolor;
+            title.style.filter="progid:DXImageTransform.Microsoft.Alpha(startX=20, startY=20, finishX=100, finishY=100,style=1,opacity=75,finishOpacity=100);";
+            title.style.opacity="0.75";
+            title.style.border="1px solid " + bordercolor;
+            title.style.height="18px";
+            title.style.font="12px Verdana, Geneva, Arial, Helvetica, sans-serif";
+            title.style.color="white";
+            title.innerHTML="提示信息";
+            document.getElementById("alertmsgDiv").appendChild(title);
+            //提示信息
+            var txt = document.createElement("p");
+            txt.setAttribute("id","msgTxt");
+            txt.style.margin="16px 0";
+            txt.innerHTML = str;
+            document.getElementById("alertmsgDiv").appendChild(txt);
+            //设置关闭时间
+            window.setTimeout("closewin()",2000);
+        }
+        function closewin() {
+            document.body.removeChild(document.getElementById("alertbgDiv"));
+            document.getElementById("alertmsgDiv").removeChild(document.getElementById("alertmsgTitle"));
+            document.body.removeChild(document.getElementById("alertmsgDiv"));
         }
 
 
