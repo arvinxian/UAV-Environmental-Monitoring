@@ -189,8 +189,8 @@ function time_searchb()
   var date2=new Date();
   date2.setFullYear(selYear1,selMonth1,selDay1);
 
-  alert(date1);
-  alert(date2);
+  //alert(date1);
+  //alert(date2);
   var trs = mytable.rows;
   var amount = trs.length;
   for(var i=1;i<trs.length;i++)
@@ -198,7 +198,7 @@ function time_searchb()
     var tr=trs[i];
     var tr1=trs[i].cells[4].childNodes[0].data;
     var date3=new Date(tr1);
-    alert(date3);
+    //alert(date3);
     if(date3>date1&&date3<date2)
     {
       tr.style.display = '';
